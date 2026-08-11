@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doze AOD Wallpaper</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #1a1e26;
+      --accent: #4cc2ff;
+      --text: #e6e9ef;
+      --muted: #8b93a3;
+      --border: #2a303c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+      padding: 20px 16px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .label { font-size: 14px; color: var(--muted); }
+    .value { font-size: 22px; font-weight: 700; color: var(--accent); }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 32px;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: -8px;
+      box-shadow: 0 0 8px rgba(76,194,255,.5);
+    }
+    .array {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 6px;
+      word-break: break-all;
+    }
+    .presets {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 12px 0;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    button.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0f1115;
+    }
+    button:active { transform: scale(.97); }
+    .status {
+      display: none;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .status.ok { display: block; background: rgba(76,194,255,.12); color: var(--accent); border: 1px solid var(--accent); }
+    .status.err { display: block; background: rgba(255,99,99,.12); color: #ff6363; border: 1px solid #ff6363; }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h1>Doze AOD Wallpaper</h1>
+  <div class="sub">Brightness control for Always-On Display wallpaper</div>
+
+  <div class="card">
+    <div class="row">
+      <span class="label">Brightness level</span>
+      <span class="value" id="value">40</span>
+    </div>
+    <input type="range" id="slider" min="5" max="100" step="5" value="40" />
+    <div class="array" id="array">-1:40:80:120:160</div>
+    <div class="hint">Applies on release. AOD brightness array scales uniformly: -1:V:2V:3V:4V</div>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:10px;">Presets</div>
+    <div class="presets">
+      <button data-v="15" id="presetLow">Low</button>
+      <button data-v="40" id="presetMed">Medium</button>
+      <button data-v="80" id="presetHigh">High</button>
+    </div>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <script type="module" src="./assets/app.js"></script>
+</body>
+</html>
