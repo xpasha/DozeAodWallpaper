@@ -36,7 +36,8 @@ it back on and fixes the brightness that Google left at a barely-visible level.
 - **🎛️ WebUI** — full page with slider + presets, powered by [KSUWebUI](https://github.com/5ec1cff/KSUWebUIStandalone)
 - **⚡ Action button** — one tap on the module card in Magisk opens the WebUI
 - **🔄 Smart fallback** — no KSUWebUI installed? The Action button cycles presets `Low → Medium → High`
-- **♻️ Survives factory reset** — re-applies everything on boot via `service.sh`
+- **♻️ Survives reboot** — re-applies everything on boot via `service.sh`
+- **🧹 Clean uninstall** — `uninstall.sh` restores stock settings when you remove the module
 
 ## 🎯 Presets
 
@@ -48,7 +49,7 @@ it back on and fixes the brightness that Google left at a barely-visible level.
 
 ## 📦 Installation
 
-1. Download [`AOD-Wallpaper-Module-v2.0.zip`](AOD-Wallpaper-Module-v2.0.zip)
+1. Download [`AOD-Wallpaper-Module-v2.1.zip`](AOD-Wallpaper-Module-v2.1.zip)
 2. Install it in **Magisk** → Modules → Install from storage
 3. **Reboot**
 4. Lock your screen and enjoy the wallpaper on AOD ✨
@@ -63,6 +64,26 @@ it back on and fixes the brightness that Google left at a barely-visible level.
 **No KSUWebUI — tap-to-cycle:**
 - Tap the **Action** button on the module card to cycle `Low → Medium → High`
 - Current level is shown in the module description
+
+## 🗑️ Uninstalling (v2.1+)
+
+Just remove the module in Magisk/KernelSU and reboot. The module's
+`uninstall.sh` runs automatically and deletes the settings keys the module
+added — AOD wallpaper goes back to stock, Always-On Display itself stays on
+(factory default).
+
+**Coming from v2.0 or older?** Those versions had no uninstall cleanup, so if
+you already removed the module and the wallpaper stayed, revert manually:
+
+```bash
+su
+settings delete secure doze_always_on_wallpaper_enabled
+settings delete secure doze_always_on
+settings delete global always_on_display_constants
+killall com.android.systemui   # or just reboot
+```
+
+(Or: install v2.1 and remove it right away — same result.)
 
 ## 🛠️ Compatibility
 
@@ -95,6 +116,7 @@ module/
 ├── action.sh             # Action button → WebUI / preset cycle fallback
 ├── apply.sh              # applies config.ini → settings + restart SystemUI
 ├── service.sh            # restores settings on every boot
+├── uninstall.sh          # removes the settings keys on module removal
 ├── config.ini            # persisted brightness level (0–100)
 ├── webroot/              # KSUWebUI page (slider + presets)
 │   ├── index.html
