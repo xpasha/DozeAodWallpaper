@@ -1,7 +1,16 @@
 # Session context / handoff notes
 
 Everything a fresh session needs to continue this project that is **not** in the
-README. Updated 2026-08-11.
+README. Updated 2026-08-24.
+
+## v2.1 (2026-08-24): clean uninstall
+
+v2.0 had a bug: settings keys written by apply.sh/service.sh were NOT reverted
+on module removal (Settings provider lives in /data/system, Magisk doesn't touch
+it). A public user reported AOD wallpaper persisting after uninstall. Fixed by
+adding `uninstall.sh` (runs on module removal, `settings delete` on all three
+keys + killall systemui). Users coming from v2.0 must revert manually or
+install+remove v2.1. Manual rollback is documented in README ("Uninstalling").
 
 ## Target device & environment
 
